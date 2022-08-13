@@ -1,0 +1,26 @@
+<?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $product = $objectManager->get('Magento\Framework\Registry')->registry('current_product');//get current product
+    $productTypeInstance = $product->getTypeInstance();
+   if ($product->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE) {
+    $usedProducts = $productTypeInstance->getUsedProducts($product);
+
+    ?>
+<?php
+        foreach ($usedProducts  as $child) {?>
+            <span class="myli" id="div<?php echo $child->getId()?>"  style="display:none">
+            <?php
+            $productStockObj = $objectManager->get('Magento\CatalogInventory\Api\StockRegistryInterface')->getStockItem($child->getId());
+            echo "Disponibles para entrega hoy: ".round($productStockObj->getData('qty'));
+            ?>
+            </span>
+
+ <?php    }   ?>
+
+  <?php }else{
+     $productStockObj = $objectManager->get('Magento\CatalogInventory\Api\StockRegistryInterface')->getStockItem($product->getId());
+     echo "Disponibles para entrega hoy: ".round($productStockObj->getData('qty'));
+	    }?>
+<!--
+<?= "<span>".__("Hurry Up!! Only %1 Qty left in stock",$block->saleble()) . "</span>";?>
+-->
