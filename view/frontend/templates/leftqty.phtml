@@ -21,6 +21,6 @@
      $productStockObj = $objectManager->get('Magento\CatalogInventory\Api\StockRegistryInterface')->getStockItem($product->getId());
      echo "Disponibles para entrega hoy: ".round($productStockObj->getData('qty'));
 	    }?>
-<!--
-<?= "<span>".__("Hurry Up!! Only %1 Qty left in stock",$block->saleble()) . "</span>";?>
--->
+
+<?= "<span>".__("Hurry Up!! Only %1 Qty left in stock", $block->saleble()) . "</span>";?>
+

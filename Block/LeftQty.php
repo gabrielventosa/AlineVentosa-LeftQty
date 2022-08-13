@@ -41,18 +41,26 @@ class LeftQty extends \Magento\Framework\View\Element\Template
     protected $product;
 
     /**
+     * @var \Magento\Framework\Registry
+     */
+    private $registry;
+
+    /**
      * LeftQty constructor.
      * @param \Magento\Backend\Block\Template\Context $context
      * @param \Magento\Framework\App\Request\Http $request
      * @param ProductFactory $product
      * @param StoreManagerInterface $storemanager
      * @param GetProductSalableQtyInterface $salebleqty
-     * @param StockResolverInterface $stockresolver
+     * @param StockResolverInterface
+     * @param \Magento\Framework\Registry $registry
      * @param array $data
      */
+
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\App\Request\Http $request,
+        \Magento\Framework\Registry $registry,
         ProductFactory $product,
         StoreManagerInterface $storemanager,
         GetProductSalableQtyInterface $salebleqty,
@@ -61,10 +69,17 @@ class LeftQty extends \Magento\Framework\View\Element\Template
     {
         $this->request = $request;
         $this->product = $product;
+        $this->registry =$registry;
         $this->storemanager = $storemanager;
         $this->salebleqty = $salebleqty;
         $this->stockresolver = $stockresolver;
         parent::__construct($context, $data);
+    }
+
+    public function getCurrentProduct()
+    {
+        /* @var \Magento\Framework\Registry */
+        return $this->registry->registry('current_product');
     }
 
     /**
@@ -72,8 +87,9 @@ class LeftQty extends \Magento\Framework\View\Element\Template
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function saleble()
-    { /*
-        $productId = $this->request->getParam('id');
+    {
+        $productId = $this->getCurrentProduct()->getId();
+        //$productId = $this->request->getParam('id');
         $websiteCode = $this->storemanager->getWebsite()->getCode();
         $stockDetails = $this->stockresolver->execute(SalesChannelInterface::TYPE_WEBSITE, $websiteCode);
         $stockId = $stockDetails->getStockId();
@@ -87,6 +103,5 @@ class LeftQty extends \Magento\Framework\View\Element\Template
 	} else {
             return '';
         }
-	*/ return '';
     }
 }
