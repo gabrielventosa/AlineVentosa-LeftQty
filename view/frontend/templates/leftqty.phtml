@@ -1,3 +1,4 @@
+<!--
 <?php
     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
     $product = $objectManager->get('Magento\Framework\Registry')->registry('current_product');//get current product
@@ -21,6 +22,21 @@
      $productStockObj = $objectManager->get('Magento\CatalogInventory\Api\StockRegistryInterface')->getStockItem($product->getId());
      echo "Disponibles para entrega hoy: ".round($productStockObj->getData('qty'));
 	    }?>
+-->
+<?php
+    $values = $block->saleble();
+    foreach ($values as $k => $b) {?>
+    <span class="myli" id="div<?php echo $k?>"  style="display:none">
+        <?php
+            foreach ($b as $q) {
+                ?> <p style="margin: 0 "><?php echo $q;?></p>
+            <?php
+            }
+            ?>
+    </span>
+    <?php
+    }?>
 
-<?= "<span>".__("Hurry Up!! Only %1 Qty left in stock", $block->saleble()) . "</span>";?>
-
+<!--
+<?= "<span>".__("Result: ", $block->saleble()) . "</span>";?>
+-->
