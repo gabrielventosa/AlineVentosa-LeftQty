@@ -159,8 +159,7 @@ class LeftQty extends \Magento\Framework\View\Element\Template
                         continue;
                     }
                     $stock = round($stockItemData["quantity"]);
-                    //$stock = $this->salebleqty->execute($p_sku, $stockId);
-                    $stockData[] = $stockName .": " . $stock;
+                    $stockData[] = array($stockName, $stock);
                 }
                 $result[$p_id] = $stockData;
             }
